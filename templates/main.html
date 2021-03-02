@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home Page
+{% endblock %}
+
+{% block main %}
+<h1 class="main-title">Welcome to EDora Gaming</h1>
+<h3>Welcome to EDora Gaming, the one stop shop for your RPG Campaign.
+This website is for use specifically with the EDora Gaming system, and keeps all
+of your details online to help with the smooth running and management of online TableTop RPGs.<br>
+With this website you are able to do the following amazing things</h3>
+<div class="home-grid-box">
+    <div class="home-grid-header"><h1>Add Character</h1></div>
+    {% if session.user_id %}
+    <div class="home-grid-block"><p>Using this link will take you to the custom character addition tool. This form will enable you to store all of your characters on our custome database.</p>
+    <div><button class="main-page-button"><a href="/add_char">Add Character</a></button></div>
+    {% else %}
+    <div class="home-grid-block"><p>Have you just been guided through the Character Generation process by the GM, and need to log your character into the database...</p></div>
+    <div><button class="main-page-button"><a href="/login">Log in</a></button></div>
+    {% endif %}
+</div>
+<div class="home-grid-box">
+    <div class="home-grid-header"><h1>See Character List</h1></div>
+    {% if session.user_id %}
+    <div class="home-grid-block"><p>Click on the link below to see the list of your characters, alive, dead, or simply retired.
+    All of the information is here.</p></div>
+    <div><button class="main-page-button"><a href="/char_list">Character List</a></button></div>
+    {% else %}
+    <div class="home-grid-block"><p>Using our specially designed Character Management tools, you can see their status whenever you log in.
+    Check your current health level before the next adventure, or reminice over Adventurers gone but not forgotten</p></div>
+    <div><button class="main-page-button"><a href="/login">Log in</a></button></div>
+    {% endif %}
+</div>
+<div class="home-grid-box">
+    <div class="home-grid-header"><h1>See Campaign Log</h1></div>
+    {% if session.user_id %}
+    <div class="home-grid-block"><p>Are your characters in an active campaign? What has happened? Perhaps you missed some information the GM handed out.
+    Click here to refresh your memory before the next session. </p></div>
+    <div><button class="main-page-button"><a href="/campaign">Campaign Log</a></button></div>
+    {% else %}
+    <div class="home-grid-block"><p>With the Campaign Log tool on our site, the GM can write a short description of the events of the adventure and log them on the site. A very handy tool if you have missed a few
+    sessions or have memory issues.</p></div>
+    <div><button class="main-page-button"><a href="/login">Log in</a></button></div>
+    {% endif %}
+</div>
+<div class="home-grid-box">
+    <div class="home-grid-header"><h1>Party Status</h1></div>
+    {% if session.user_id %}
+    <div  class="home-grid-block"><p>Who is in your adventuring party? What is their Class and Level? Do they need healing before the next session?</p></div>
+    <div><button class="main-page-button"><a href="/party">Party Status</a></button></div>
+    {% else %}
+    <div cless="home-grid-block"><p>This section of the website helps you remember all of the other members of your Adventuring party. You will not be able to see their character sheets, but you will be able to see them.</p></div>
+    <div><button class="main-page-button"><a href="/login">Log in</a></button></div>
+    {% endif %}
+</div>
+<div class="home-grid-box">
+    <div class="home-grid-header"><h1>Party Loot</h1></div>
+    {% if session.user_id %}
+    <div class="home-grid-block"><p>What has your party picked up from the dungeon so far. Do you want to see what loot you may have to sell,
+    and what might be magical items? Click here to see the riches you have gained.</p></div>
+    <div><button class="main-page-button"><a href="/kitty">Party Kitty</a></button></div>
+    {% else %}
+    <div class="home-grid-header"><p>This tool allows you to track every shred of loot your adventuring party has accumulated.</p></div>
+    <div><button class="main-page-button"><a href="/login">Log in</a></button></div>
+    {% endif %}
+</div>
+{% endblock %}
