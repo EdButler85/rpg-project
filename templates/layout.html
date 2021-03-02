@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <link href="/static/styles.css" rel="stylesheet">
+        <meta name="description" content="Landing page for EDora Gaming">
+        <meta name="keywords" content="EDora Gaming, Table Top RPG, TTRPG, RPG, Character Sheet, Homebrew System" />
+        <meta property="fb:admins" content="Ed J W Butler" />
+        <meta property="og:title" content="EDora Gaming" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://EDora_Gaming.com/" />
+        <meta property="og:description" content="The online repositiry for all of your Table Top Gaming needs. " />
+        <title>EDora Gaming</title>
+    </head>
+
+    <body>
+        <header>
+           EDora Gaming {% block title %}{% endblock %}
+        </header>
+        <div class="flex-container">
+            {% if session.user_id %}
+            <div class="menu-item" name="view-characters"><a href="/view_chars">View Characters</a></div>
+            <div class="menu-item" name="add-character"><a href="/add_char">Add Character</a></div>
+            <div class="menu-item" name="party-status"><a href="/party_status">Party Status</a></div>
+            <div class="menu-item" name="campaign-log"><a href="/campaign">Campaign Log</a></div>
+            <div class="menu-item" name="party-kitty"><a href="/kitty">Party Kitty</a></div>
+            <div class="menu-item" name="view-profile"><a href="/profile">View Profile</a></div>
+            <div class="menu-item" name="logout"><a href="/logout">Log out</a></div>
+            {% else %}
+            <div class="menu-item" name="log-in"><a href="/login">Log in</a></div>
+            <div class="menu-item" name="register"><a href="/register">Register</a></div>
+            {% endif %}
+        </div>
+
+        <main class="container p-5">
+            {% block main %}{% endblock %}
+        </main>
+
+        <footer class="small text-centre text-muted">
+            Copyright EdButler 85.
+        </footer>
+
+    </body>
