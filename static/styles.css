@@ -44,15 +44,15 @@ h3, h2, h1 {
   font-size: 18px;
   text-decoration: none;
 }
-a:link {
+.menu-item a:link {
   color: white;
   text-decoration: none;
 }
-a:visited {
+.menu-item a:visited {
   color: white;
   text-decoration: none;
 }
-a:active {
+.menu-item a:active {
   color: white;
   text-decoration: none;
 }
@@ -95,4 +95,13 @@ p {
 }
 .register-title {
   text-align: center;
+}
+
+.character-sheet {
+  border-collapse: collapse;
+  border: 1px solid red;
+}
+
+.character-sheet th, .character-sheet td {
+  border: 1px solid red;
 }

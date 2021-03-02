@@ -17,15 +17,15 @@
             <td>View</td>
          </thead>
 
-         {% for row in rows %}
+         {% for character in characters %}
             <tr>
-               <td>{{ character["user"] }}</td>
-               <td>{{ character["name"] }}</td>
-               <td>{{ character["race"] }}</td>
-               <td>{{ character["cha_class"] }}</td>
-               <td>{{ character["level"] }}</td>
-               <td>{{ character["status"] }}</td>
-               <td><a href={{ url_for('character_sheet', character_id=character.id) }}>View Sheet</a></td>
+               <td>{{ character.username }}</td>
+               <td>{{ character.name }}</td>
+               <td>{{ character.race }}</td>
+               <td>{{ character.cha_class }}</td>
+               <td>{{ character.level }}</td>
+               <td>{{ character.status }}</td>
+               <td><a href="{{ url_for('character_sheet', character_id=character.id) }}">View Sheet</a></td>
             </tr>
          {% endfor %}
 
