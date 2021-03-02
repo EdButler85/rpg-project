@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+body {
+  background-image: url("parchment.jpg");
+  background-color: #f1f1d4;
+  background-size: cover;
+  margin: 0px;
+}
+header {
+  font-family: 'Bebas Neue', cursive;
+  color: #000080;
+  font-size: 60px;
+  background-color: #dab171;
+  text-align: center;
+  height: 100px;
+  background-size:100%;
+}
+h3, h2, h1 {
+  font-family: 'Cormorant Garamond', serif;
+  color: #000080
+}
+.main-title {
+  font-weight: bold;
+  text-align: center;
+  text-decoration: underline;
+}
+.main-page-button {
+  background-color: #000080;
+  border: 1px #000000;
+  padding: 15px 32px;
+  text-align: center;
+  font-size: 16px;
+  color: #ffffff;
+  text-decoration: none;
+}
+.menu-item {
+  background-color: #675539;
+  font-family: 'Fira Sans', sans-serif;
+  color: #dab171;
+  padding: 15px 15px;
+  text-align: center;
+  font-size: 18px;
+  text-decoration: none;
+}
+a:link {
+  color: white;
+  text-decoration: none;
+}
+a:visited {
+  color: white;
+  text-decoration: none;
+}
+a:active {
+  color: white;
+  text-decoration: none;
+}
+.flex-container {
+  flex-wrap: wrap;
+  display: flex;
+  width: 100%;
+  background-color: #23001e;
+  background-size: cover;
+  margin: 0 0;
+  justify-content: center;
+}
+.menu-item:hover {
+  background-color: #dab171;
+  color: #675539;
+}
+.home-grid-box {
+  display: grid;
+  border: 2px solid #000080;
+  background-color: #ffffff;
+  opacity: 0.5;
+  padding: 10px;
+}
+.home-grid-header {
+  display: grid;
+  border: 1px solid #000000;
+  padding: 5px;
+  text-align: center;
+}
+.home-grid-block {
+  display: grid;
+  border: 1px solid #000000;
+  padding: 5px;
+  text-align: center;
+}
+p {
+  font-family: 'Fira Sans', sans-serif;
+  color: black;
+  font-weight: bold;
+}
+.register-title {
+  text-align: center;
+}
