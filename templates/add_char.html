@@ -1,0 +1,545 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Add characters
+{% endblock %}
+
+{% block main %}
+      <form action = "/add_char" method = "POST">
+         <h2>Character Information</h2>
+         <h3>Character Name</h3><br>
+         <input type="text" name="name" id="name" placeholder="Character Name" required></br>
+
+         <h3>Race</h3><br>
+         <select id="race" name="race" required>
+            <option value="Dwarf">Dwarf</option>
+            <option value="Elf">Elf</option>
+            <option value="Gnome">Gnome</option>
+            <option value="Gnomeling">Gnomeling</option>
+            <option value="Half-Elf">Half-Elf</option>
+            <option value="Halfling">Halfling</option>
+            <option value="Human">Human</option>
+         </select><br>
+
+         <h3>Class</h3>
+         <select id="cha_class" name="cha_class" required>
+            <option value="Warrior">Warrior</option>
+            <option value="Rogue">Rogue</option>
+            <option value="Priest">Priest</option>
+            <option value="Mage">Mage</option>
+            <option value="Alchemist">Alchemist</option></option>
+            <option value="Runemaster">Runemaster</option>
+         </select>
+
+         <p>
+            <h3>Level</h3>
+            <input type="number" min="1" max="20" id="level" name="level" required>
+         </p>
+         <p>
+            <h3>Current Experience Total</h3>
+            <input type="number" min="1" max="3000000" id="experience" name="experience" required>
+         </p>
+
+         <h3>Alignment</h3><br>
+         <p>
+            <strong>L</strong> = Lawful, <strong>N</strong> = Neutral, <strong>C</strong> = Chaotic.<br>
+            <select id="alignment_lc" name="alignment_lc" required>
+               <option value="L">L</option>
+               <option value="N">N</option>
+               <option value="C">C</option>
+            </select>
+         </p>
+         <p>
+            <strong>G</strong> = Good, <strong>N</strong> = Neutral, <strong>E</strong> = Evil.<br>
+            <select id="alignment_ge" name="alignment_ge" required>
+               <option value="G">G</option>
+               <option value="N">N</option>
+               <option value="E">E</option>
+            </select>
+         </p>
+
+         <h2>Ability Scores</h2><br>
+         <p>
+            <h3>Strength</h3>
+            <input type="number" min="1" max="25" id="strength" name="strength" required>
+         </p>
+         <p>
+            <h3>Dexterity</h3>
+            <input type="number" min="1" max="25" id="dexterity" name="dexterity" required>
+         </p>
+         <p>
+            <h3>Constitution</h3>
+            <input type="number" min="1" max="25" id="constitution" name="constitution" required>
+         </p>
+         <p>
+            <h3>Intelligence</h3>
+            <input type="number" min="1" max="25" id="intelligence" name="intelligence" required>
+         </p>
+         <p>
+            <h3>Wisdom</h3>
+            <input type="number" min="1" max="25" id="wisdom" name="wisdom" required>
+         </p>
+         <p>
+            <h3>Charisma</h3>
+            <input type="number" min="1" max="25" id="charisma" name="charisma" required>
+         </p>
+         <p>
+            <h3>Honour</h3>
+            <input type="number" id="honour" name="honour" required>
+         </p>
+
+         <h2>Physical Description</h2>
+         <p>
+            <h3>Height</h3>
+            <input type="number" id="height" name="height" required>
+         </p>
+         <p>
+            <h3>Weight</h3>
+            <input type="number" id="weight" name="weight" required>
+         </p>
+         <p>
+            <h3>Handedness</h3>
+            <select id="handedness" name="handedness" required>
+               <option value="Right-Handed">Right-Handed</option>
+               <option value="Ambidextrous">Ambidextrous</option>
+               <option value="Left-Handed">Left-Handed</option>
+            </select>
+         </p>
+         <p>
+            <h3>Eye-Colour</h3>
+            <input type="text" name="eye_colour" id="eye_colour" required>
+         </p>
+         <p>
+            <h3>Hair-Colour</h3>
+            <input type="text" name="hair_colour" id="hair_colour" required>
+         </p>
+         <p>
+            <h3>Sex</h3>
+            <select id="sex" name="sex" required>
+               <option value="male">Male</option>
+               <option value="female">Female</option>
+            </select></p>
+         <p>
+            <h3>Age</h3>
+            <input type="number" id="age" name="age" required>
+         </p>
+         <p>
+            <h3>Character Status</h3>
+            <select id="status" name="status" required>
+               <option value="Alive Adventuring">Alive Adventuring</option>
+               <option value="Alive Retired">Alive Retired</option>
+               <option value="Dead Awaiting Raise">Dead Awaiting Raise</option>
+               <option value="Dead Retired">Dead Retired</option>
+               <option value="Unknown">Unknown</option>
+            </select>
+         </p>
+         <h2>Academic Skills</h2>
+         <p>
+            <h3>Anatomy</h3>
+            <select id="anatomy" name="anatomy" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Animal Lore</h3>
+            <select id="animal_lore" name="animal_lore" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Appraisal</h3>
+            <select id="appraisal" name="appraisal" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Arcana</h3>
+            <select id="arcana" name="arcana" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Botany & Forestry</h3>
+            <select id="botany_forestry" name="botany_forestry" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Engineering</h3>
+            <select id="engineering" name="engineering" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>History</h3>
+            <select id="history" name="history" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Mathematics</h3>
+            <select id="mathematics" name="mathematics" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Religion</h3>
+            <select id="religion" name="religion" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <h2>
+            Career Skills
+         </h2>
+         <p>
+            <h3>Agriculture</h3>
+            <select id="agriculture" name="agriculture" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Blacksmithing</h3>
+            <select id="blacksmithing" name="blacksmithing" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Commerce</h3>
+            <select id="commerce" name="commerce" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Jeweler</h3>
+            <select id="jeweler" name="jeweler" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+           <h3>Leather Working</h3>
+            <select id="leather_working" name="leather_working" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Masonry</h3>
+            <select id="masonry" name="masonry" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Metal Working</h3>
+            <select id="metal_working" name="metal_working" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Sailing</h3>
+            <select id="sailing" name="sailing" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Tailoring</h3>
+            <select id="tailoring" name="tailoring" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Woodworking</h3>
+            <select id="woodworking" name="woodworking" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <h2>
+            General Skills
+         </h2>
+         <p>
+            <h3>Acrobatics</h3>
+            <select id="acrobatics" name="acrobatics" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Culture</h3>
+            <select id="culture" name="culture" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Dancing</h3>
+            <select id="dancing" name="dancing" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>First Aid</h3>
+            <select id="first_aid" name="first_aid" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Manual Labour</h3>
+            <select id="manual_labour" name="manual_labour" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Musical Abilty</h3>
+            <select id="musical_ability" name="musical_ability" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Observation</h3>
+            <select id="observation" name="observation" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Sleight</h3>
+            <select id="sleight" name="sleight" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Sneak</h3>
+            <select id="sneak" name="sneak" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Social Interaction</h3>
+            <select id="social_interaction" name="social_interaction" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Tracking</h3>
+            <select id="tracking" name="tracking" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Upkeep & Maintenance</h3>
+            <select id="upkeep_maintenance" name="upkeep_maintenance" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <h2>
+            Languages
+         </h2>
+         <p>
+            <h3>Common</h3>
+            <select id="common" name="common" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Dwarven</h3>
+            <select id="dwarven" name="dwarven" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Elvish</h3>
+            <select id="elvish" name="elvish" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Gnomish</h3>
+            <select id="gnomish" name="gnomish" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <p>
+            <h3>Halfling</h3>
+            <select id="halfling" name="halfling" required>
+               <option value="0" selected="selected">0</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+         </p>
+         <input type="submit" value="Submit">
+         </form>
+   </body>
+{% endblock %}
