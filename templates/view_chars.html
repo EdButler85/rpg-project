@@ -1,0 +1,37 @@
+
+{% extends "main.html" %}
+
+{% block title %}
+    Characters
+{% endblock %}
+
+{% block main %}
+      <table border = 1>
+         <thead>
+            <td>Player</td>
+            <td>Name</td>
+            <td>Race</td>
+            <td>Class</td>
+            <td>Level</td>
+            <td>Status</td>
+            <td>View</td>
+         </thead>
+
+         {% for row in rows %}
+            <tr>
+               <td>{{ character["user"] }}</td>
+               <td>{{ character["name"] }}</td>
+               <td>{{ character["race"] }}</td>
+               <td>{{ character["cha_class"] }}</td>
+               <td>{{ character["level"] }}</td>
+               <td>{{ character["status"] }}</td>
+               <td><a href={{ url_for('character_sheet', character_id=character.id) }}>View Sheet</a></td>
+            </tr>
+         {% endfor %}
+
+      </table>
+      <a href = "{{ url_for('add_char') }}">Add a new Character</a>
+      <a href = "/">Go back to home page</a>
+
+   </body>
+{% endblock %}
