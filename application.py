@@ -1,7 +1,10 @@
 import os
 
 from cs50 import SQL
-from flask import Flask, flash, jsonify, redirect, render_template, request, session, url_for
+from flask import (
+    Flask, abort, flash, jsonify, redirect, render_template, request, session,
+    url_for,
+)
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
@@ -14,10 +17,14 @@ app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Configure session to use filesystem (instead of signed cookies)
-app.config["SESSION_FILE_DIR"] = mkdtemp()
+if os.environ.get("FLASK_ENV") == "development":
+    app.config["SESSION_FILE_DIR"] = "tmp"
+else:
+    app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
+
 
 @app.after_request
 def after_request(response):
@@ -28,9 +35,11 @@ def after_request(response):
 
 db = SQL("sqlite:///game_stats.db")
 
+
 @app.route("/")
 def home():
     return render_template("main.html")
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -52,23 +61,21 @@ def login():
             """SELECT
                 *
             FROM
-                user
+                "user"
             WHERE
                 username = :username
             """,
-            username = request.form.get("username"))
+            username = request.form.get("username"),
+        )
 
         # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(rows[0]["pw_hash"], request.form.get("password")):
+        if not rows or not check_password_hash(rows[0]["pw_hash"], request.form.get("password")):
             return apology("invalid username and/or password", 403)
 
-        # Remember which user has logged in
-        session["user_id"] = rows[0]["username"]
+        session["user_id"] = rows[0]["user_id"]
 
-        # Redirect user to home page
-        return redirect("/")
+        return redirect(url_for("home"))
 
-    # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("login.html")
 
@@ -80,7 +87,8 @@ def add_char():
     if request.method == "POST":
 
             db.execute("""INSERT INTO
-                characters (user_id, name, alignment_lc, alignment_ge,
+                characters (
+                    user_id, name, alignment_lc, alignment_ge,
                     race, cha_class, level, strength, dexterity, constitution,
                     intelligence, wisdom, charisma, honour, status, height, weight,
                     handedness, eye_colour, hair_colour, sex, age, acrobatics,
@@ -88,9 +96,10 @@ def add_char():
                     common, culture, dancing, dwarven, elvish, engineering, agriculture,
                     first_aid, gnomish, halfling, history, jeweler, leather_working, manual_labour,
                     masonry, mathematics, metal_working, musical_ability, observation,
-                    religion, sailing, sleight, sneak, social_ineraction, tailoring,
-                    tracking, upkeep_maintenance, woodworking, experience, commerce)
-                VALUES (:user_id, :name, :alignment_lc, :alignment_ge,
+                    religion, sailing, sleight, sneak, social_interaction, tailoring,
+                    tracking, upkeep_maintenance, woodworking, experience, commerce
+                ) VALUES (
+                    :user_id, :name, :alignment_lc, :alignment_ge,
                     :race, :cha_class, :level, :strength, :dexterity, :constitution,
                     :intelligence, :wisdom, :charisma, :honour, :status, :height, :weight,
                     :handedness, :eye_colour, :hair_colour, :sex, :age, :acrobatics,
@@ -98,8 +107,9 @@ def add_char():
                     :common, :culture, :dancing, :dwarven, :elvish, :engineering, :agriculture,
                     :first_aid, :gnomish, :halfling, :history, :jeweler, :leather_working, :manual_labour,
                     :masonry, :mathematics, :metal_working, :musical_ability, :observation,
-                    :religion, :sailing, :sleight, :sneak, :social_ineraction, :tailoring,
-                    :tracking, :upkeep_maintenance, :woodworking, :experience, :commerce)
+                    :religion, :sailing, :sleight, :sneak, :social_interaction, :tailoring,
+                    :tracking, :upkeep_maintenance, :woodworking, :experience, :commerce
+                )
                 """,
                 user_id = session["user_id"],
                 name = request.form.get("name"),
@@ -109,7 +119,7 @@ def add_char():
                 cha_class = request.form.get("cha_class"),
                 level = request.form.get("level"),
                 strength = request.form.get("strength"),
-                dextertiy = request.form.get("dexterity"),
+                dexterity = request.form.get("dexterity"),
                 constitution = request.form.get("constitution"),
                 intelligence = request.form.get("intelligence"),
                 wisdom = request.form.get("wisdom"),
@@ -120,7 +130,7 @@ def add_char():
                 weight = request.form.get("weight"),
                 handedness = request.form.get("handedness"),
                 eye_colour = request.form.get("eye_colour"),
-                hair_colour = request,form.get("hair_colour"),
+                hair_colour = request.form.get("hair_colour"),
                 sex = request.form.get("sex"),
                 age = request.form.get("age"),
                 acrobatics = request.form.get("acrobatics"),
@@ -144,7 +154,6 @@ def add_char():
                 jeweler = request.form.get("jeweler"),
                 leather_working = request.form.get("leather_working"),
                 manual_labour = request.form.get("manual_labour"),
-                musical_ability = request.form.get("musical_ability"),
                 masonry = request.form.get("masonry"),
                 mathematics = request.form.get("mathematics"),
                 metal_working = request.form.get("metal_working"),
@@ -160,10 +169,10 @@ def add_char():
                 upkeep_maintenance = request.form.get("upkeep_maintenance"),
                 woodworking = request.form.get("woodworking"),
                 experience = request.form.get("experience"),
-                commerce = request.form.get("commerce")
+                commerce = request.form.get("commerce"),
             )
 
-            return redirect("/")
+            return redirect(url_for("home"))
 
     else:
         return render_template("add_char.html")
@@ -172,30 +181,32 @@ def add_char():
 @app.route("/view_chars")
 @login_required
 def view_chars():
-
-    # obtain a list of characters from the db
     characters = db.execute(
         """SELECT
-            name, race, cha_class, level, status,
+            characters.id,
+            characters.name,
+            characters.race,
+            characters.cha_class,
+            characters.level,
+            characters.status,
+            user.username
         FROM
             characters
+        INNER JOIN
+            user ON user.user_id = characters.user_id
         WHERE
-            user_id = :user_id
+            characters.user_id = :user_id
         """,
-        user_id = session["user_id"])
+        user_id=session["user_id"],
+    )
 
     if not characters:
-        return render_template("add_char.html")
-    # Iterate over characters and display in table
+        return redirect(url_for("add_char"))
 
-    for character in characters:
-        name = character["name"]
-        race = character["race"]
-        cha_class = character["cha_class"]
-        level = character["level"]
-        status = character["status"]
+    return render_template("view_chars.html", characters=characters)
 
-@app.route("/<character_id>")
+
+@app.route("/<int:character_id>")
 @login_required
 def character_sheet(character_id):
 
@@ -215,26 +226,18 @@ def character_sheet(character_id):
     if not characters:
         return abort(404)
 
-    return render_template(
-        "characters/sheet.html",
-        character = characters[0],
-    )
+    return render_template("character_sheet.html", character=characters[0])
 
 
 @app.route("/logout")
 @login_required
 def logout():
-
-    # Forget any user_id
     session.clear()
-
-    # Redirect user to login form
-    return redirect("/")
+    return redirect(url_for("home"))
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
@@ -255,27 +258,31 @@ def register():
             return apology("Password and password confirmation must match", 400)
 
         # Add username and hashed password to the database
-        result = db.execute("""
-                            INSERT INTO
-                                user (username, pw_hash)
-                            VALUES
-                                (:username, :pw_hash)
-                            """,
-                            username = request.form.get("username"),
-                            pw_hash = generate_password_hash(request.form.get("password")))
-
-        # Ensure username is not already in database
-        if not result:
+        try:
+            result = db.execute(
+                """
+                INSERT INTO
+                    "user" (username, pw_hash)
+                VALUES
+                    (:username, :pw_hash)
+                """,
+                username=request.form.get("username"),
+                pw_hash=generate_password_hash(request.form.get("password")),
+            )
+        except ValueError as e:
+            # Ensure username is not already in database
             return apology("username already exists", 400)
 
         # Remember which user has logged in
-        session["user_id"] = result
+        print(f"register: {result}")
+        if result:
+            session["user_id"] = result
 
-        # Redirect user to login form
-        return redirect("/login")
+        return redirect(url_for("home"))
 
     else:
         return render_template("register.html")
 
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
